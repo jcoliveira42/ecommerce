@@ -55,7 +55,7 @@ class Category extends Model {
 			':idcategory'=>$this->getidcategory()
 		]);
 
-		//Category::updateFile();
+		Category::updateFile();
 
 	}
 
@@ -213,5 +213,6 @@ class Category extends Model {
 	}
 
 }
+
 
  ?>

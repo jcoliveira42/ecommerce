@@ -276,7 +276,7 @@ $app->get("/admin/categories", function()
 
 {
 	User::verifyLogin();
-	
+
 	$categories = Category::listAll();
 
 
@@ -374,6 +374,46 @@ $app->post("/admin/categories/:idcategory", function($idcategory){
 	exit;
 
 });
+
+
+
+
+
+$app->get("/admin/categories/:idcategory/products", function($idcategory){
+
+	User::verifyLogin();
+
+	$category = new Category();
+
+	$category->get((int)$idcategory);
+
+	$page = new PageAdmin();
+
+	$page->setTpl("categories-products", [
+		'category'=>$category->getValues(),
+		'productsRelated'=>$category->getProducts(),
+		'productsNotRelated'=>$category->getProducts(false)
+	]);
+
+});
+
+
+
+$app->get("/categories/:idcategory", function($idcategory){
+
+	$category = new Category();
+
+	$category->get((int)$idcategory);
+
+	$page = new Page();
+
+	$page->setTpl("category", [
+		'category'=>$category->getValues(),
+		'products'=>[]
+		]);
+
+});
+
 
 
 
