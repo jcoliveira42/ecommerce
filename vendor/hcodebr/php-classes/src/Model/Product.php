@@ -6,10 +6,11 @@ use \Hcode\DB\Sql;
 use \Hcode\Model;
 use \Hcode\Mailer;
 
+
+
 class Product extends Model {
 
-	public static function listAll()
-	{
+	public static function listAll(){
 
 		$sql = new Sql();
 
@@ -17,13 +18,14 @@ class Product extends Model {
 
 	}
 
-	public static function checkList($list)
-	{
+	public static function checkList($list){
 
 		foreach ($list as &$row) {
 			
 			$p = new Product();
+
 			$p->setData($row);
+
 			$row = $p->getValues();
 
 		}
@@ -32,8 +34,7 @@ class Product extends Model {
 
 	}
 
-	public function save()
-	{
+	public function save(){
 
 		$sql = new Sql();
 
@@ -52,56 +53,65 @@ class Product extends Model {
 
 	}
 
-	public function get($idproduct)
-	{
+	public function get($idproduct){
 
 		$sql = new Sql();
 
 		$results = $sql->select("SELECT * FROM tb_products WHERE idproduct = :idproduct", [
+
 			':idproduct'=>$idproduct
+
 		]);
 
 		$this->setData($results[0]);
 
 	}
 
-	public function delete()
-	{
+	public function delete(){
 
 		$sql = new Sql();
 
 		$sql->query("DELETE FROM tb_products WHERE idproduct = :idproduct", [
+
 			':idproduct'=>$this->getidproduct()
+
 		]);
 
 	}
 
-	public function checkPhoto()
-	{
+public function checkPhoto(){
 
-		if (file_exists(
-			$_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 
-			"res" . DIRECTORY_SEPARATOR . 
-			"site" . DIRECTORY_SEPARATOR . 
-			"img" . DIRECTORY_SEPARATOR . 
-			"products" . DIRECTORY_SEPARATOR . 
-			$this->getidproduct() . ".jpg"
-			)) {
+  if(file_exists($_SERVER['DOCUMENT_ROOT']. DIRECTORY_SEPARATOR.
 
-			$url = "/res/site/img/products/" . $this->getidproduct() . ".jpg";
+   "res". DIRECTORY_SEPARATOR.
 
-		} else {
+   "site" . DIRECTORY_SEPARATOR .
 
-			$url = "/res/site/img/product.jpg";
+    "img" . DIRECTORY_SEPARATOR.
 
-		}
+    "products". DIRECTORY_SEPARATOR .
 
-		return $this->setdesphoto($url);
+    $this->getidproduct() . '.jpg'
 
-	}
+  )){
 
-	public function getValues()
-	{
+    $url = "/res/site/img/products/" . $this->getidproduct() . ".jpg";
+
+  }else{
+
+    $url = "/res/site/img/product.jpg";
+
+  }
+
+
+
+  return $this->setdesphoto($url);
+
+}
+
+
+
+	public function getValues(){
 
 		$this->checkPhoto();
 
@@ -111,10 +121,10 @@ class Product extends Model {
 
 	}
 
-	public function setPhoto($file)
-	{
+	public function setPhoto($file){
 
 		$extension = explode('.', $file['name']);
+
 		$extension = end($extension);
 
 		switch ($extension) {
@@ -149,21 +159,21 @@ class Product extends Model {
 
 	}
 
-	public function getFromURL($desurl)
-	{
+	public function getFromURL($desurl){
 
 		$sql = new Sql();
 
 		$rows = $sql->select("SELECT * FROM tb_products WHERE desurl = :desurl LIMIT 1", [
+
 			':desurl'=>$desurl
+
 		]);
 
 		$this->setData($rows[0]);
 
 	}
 
-	public function getCategories()
-	{
+	public function getCategories(){
 
 		$sql = new Sql();
 
@@ -172,12 +182,12 @@ class Product extends Model {
 		", [
 
 			':idproduct'=>$this->getidproduct()
+
 		]);
 
 	}
 
-	public static function getPage($page = 1, $itemsPerPage = 10)
-	{
+	public static function getPage($page = 1, $itemsPerPage = 10){
 
 		$start = ($page - 1) * $itemsPerPage;
 
@@ -200,8 +210,7 @@ class Product extends Model {
 
 	}
 
-	public static function getPageSearch($search, $page = 1, $itemsPerPage = 10)
-	{
+	public static function getPageSearch($search, $page = 1, $itemsPerPage = 10){
 
 		$start = ($page - 1) * $itemsPerPage;
 
@@ -226,7 +235,7 @@ class Product extends Model {
 		];
 
 	}
-
+	
 }
 
  ?>

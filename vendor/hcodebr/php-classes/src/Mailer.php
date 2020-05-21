@@ -12,7 +12,7 @@ use PHPMailer\PHPMailer\SMTP;
 
 class Mailer {
 	
-	const USERNAME = "jcoliveira423027@gmail.com";
+	const USERNAME = "";
 	const PASSWORD = "";
 	const NAME_FROM = "Jenilson Costa";
 
